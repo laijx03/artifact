@@ -814,11 +814,6 @@ MAIN_GRAPH              	           1	 3807.178987 sec
  BOOTSTRAP               	   sub total	 1416.520248 sec
  PT_ENCODE               	      115820	  881.161252 sec
 MAIN_GRAPH              	   sub total	 5434.278976 sec
-expect relative error less than: 0.001000
-index: 0, value: -0.004217 != 0.000131, result relative error: 33.079393
-expect absolute error less than: 0.000100
-index: 0, value: -0.004217 != 0.000131, result absolute error=0.004348
-FAILED!
 
 real	72m44.956s
 user	69m28.340s

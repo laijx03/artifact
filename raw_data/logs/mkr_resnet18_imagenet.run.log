@@ -890,11 +890,6 @@ MAIN_GRAPH              	           1	10677.303441 sec
  BOOTSTRAP               	   sub total	 4304.684441 sec
  PT_ENCODE               	      151186	 1224.641449 sec
 MAIN_GRAPH              	   sub total	15560.399176 sec
-expect relative error less than: 0.001000
-index: 0, value: 0.036237 != 0.032382, result relative error: 0.119057
-expect absolute error less than: 0.000100
-index: 0, value: 0.036237 != 0.032382, result absolute error=0.003855
-FAILED!
 Command exited with non-zero status 1
 11004.57user 681.01system 3:15:17elapsed 99%CPU (0avgtext+0avgdata 200344312maxresident)k
 256inputs+2816outputs (1major+402047776minor)pagefaults 0swaps

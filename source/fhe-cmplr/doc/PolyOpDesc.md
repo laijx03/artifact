@@ -354,7 +354,6 @@ HPOLY is designed to abstract operations for RNS_POLY granularity, which is targ
 LPOLY is desinged to abstract operations for single POLY  granularity, which is target dependant.
 
 A brief type lowering from CKKS->HPOLY->LPOLY is listed as below
-![rnspoly.png](https://intranetproxy.alipay.com/skylark/lark/0/2025/png/92656830/1736234083282-49d624a4-bb6a-4100-b704-36ce3a21397f.png) 
 
 ### HPOLY Operators
   | Category   | Operator                                      |

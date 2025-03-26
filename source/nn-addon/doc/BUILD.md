@@ -31,8 +31,8 @@
 
     ```
     mkdir workarea && cd workarea
-    git clone git@code.alipay.com:air-infra/nn-addon.git --recurse
-    git clone git@code.alipay.com:air-infra/air-infra.git --recurse
+    git clone git@xxxx.xxxx.xxxx:air-infra/nn-addon.git --recurse
+    git clone git@xxxx.xxxx.xxxx:air-infra/air-infra.git --recurse
     ```
     ```
     cmake -S nn-addon -B build -DNN_WITH_SRC="air-infra"

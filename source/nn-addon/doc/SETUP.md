@@ -40,9 +40,9 @@ clone_avhc.sh
 
 ```
 mkdir workarea && cd workarea
-git clone git@code.alipay.com:air-infra/nn-addon.git --recurse
+git clone git@xxxx.xxxx.xxxx:air-infra/nn-addon.git --recurse
 or
-git clone git@code.alipay.com:air-infra/nn-addon.git
+git clone git@xxxx.xxxx.xxxx:air-infra/nn-addon.git
 cd nn-addon && git submodule update --init --recursive && cd ..
 ```
 

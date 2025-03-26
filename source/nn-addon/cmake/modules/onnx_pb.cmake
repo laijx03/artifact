@@ -8,8 +8,8 @@
 # Build external onnx project dependent function
 function(build_external_proto)
 
-  set(ONNX_URL      "https://code.alipay.com/air-infra/onnx.git")
-  set(ONNX_URL_SSH  "git@code.alipay.com:air-infra/onnx.git")
+  set(ONNX_URL      "https://xxxx.xxxx.xxxx/air-infra/onnx.git")
+  set(ONNX_URL_SSH  "git@xxxx.xxxx.xxxx:air-infra/onnx.git")
   if(EXTERNAL_URL_SSH)
     set(REPO_ONNX_URL ${ONNX_URL_SSH})
   else()

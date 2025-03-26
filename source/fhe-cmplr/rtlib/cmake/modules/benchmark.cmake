@@ -8,8 +8,8 @@
 # Build external benchmark project dependent function
 function(build_external_benchmark)
 
-  set(BENCH_URL      "https://code.alipay.com/opencc/benchmark.git")
-  set(BENCH_URL_SSH  "git@code.alipay.com:opencc/benchmark.git")
+  set(BENCH_URL      "https://xxxx.xxxx.xxxx/opencc/benchmark.git")
+  set(BENCH_URL_SSH  "git@xxxx.xxxx.xxxx:opencc/benchmark.git")
   if(EXTERNAL_URL_SSH)
     set(REPO_BENCH_URL ${BENCH_URL_SSH})
   else()

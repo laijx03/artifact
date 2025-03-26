@@ -15,9 +15,9 @@ fhe-cmplr requires three repos **air-infra**, **nn-addon**, **fhe-cmplr** to be 
 
 ```
 mkdir workarea && cd workarea
-git clone https://code.alipay.com/air-infra/air-infra.git
-git clone https://code.alipay.com/air-infra/nn-addon.git
-git clone https://code.alipay.com/fhe-cmplr/fhe-cmplr.git
+git clone https://xxxx.xxxx.xxxx/air-infra/air-infra.git
+git clone https://xxxx.xxxx.xxxx/air-infra/nn-addon.git
+git clone https://xxxx.xxxx.xxxx/fhe-cmplr/fhe-cmplr.git
 ```
 
 ## Build Options

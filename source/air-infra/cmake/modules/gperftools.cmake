@@ -8,8 +8,8 @@
 # Build external gperftools project dependent function
 function(build_external_gperf)
 
-  set(GPERF_URL      "https://code.alipay.com/opencc/gperftools.git")
-  set(GPERF_URL_SSH  "git@code.alipay.com:opencc/gperftools.git")
+  set(GPERF_URL      "https://xxxx.xxxx.xxxx/opencc/gperftools.git")
+  set(GPERF_URL_SSH  "git@xxxx.xxxx.xxxx:opencc/gperftools.git")
   if(EXTERNAL_URL_SSH)
     set(REPO_GPERF_URL ${GPERF_URL_SSH})
   else()

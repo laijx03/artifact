@@ -7,8 +7,8 @@
 
 function(fetch_uthash)
 
-  set(UTHASH_URL      "https://code.alipay.com/fhe-cmplr/uthash.git")
-  set(UTHASH_URL_SSH  "git@code.alipay.com:fhe-cmplr/uthash.git")
+  set(UTHASH_URL      "https://xxxx.xxxx.xxxx/fhe-cmplr/uthash.git")
+  set(UTHASH_URL_SSH  "git@xxxx.xxxx.xxxx:fhe-cmplr/uthash.git")
   if(EXTERNAL_URL_SSH)
     set(REPO_UTHASH_URL ${UTHASH_URL_SSH})
   else()

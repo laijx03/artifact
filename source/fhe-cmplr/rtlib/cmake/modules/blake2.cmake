@@ -6,8 +6,8 @@
 #=============================================================================
 
 function(fetch_blake2)
-  set(BLAKE2_URL      "https://code.alipay.com/fhe-cmplr/BLAKE2.git")
-  set(BLAKE2_URL_SSH  "git@code.alipay.com:fhe-cmplr/BLAKE2.git")
+  set(BLAKE2_URL      "https://xxxx.xxxx.xxxx/fhe-cmplr/BLAKE2.git")
+  set(BLAKE2_URL_SSH  "git@xxxx.xxxx.xxxx:fhe-cmplr/BLAKE2.git")
   if(EXTERNAL_URL_SSH)
     set(REPO_BLAKE2_URL ${BLAKE2_URL_SSH})
   else()

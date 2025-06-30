@@ -38,7 +38,7 @@ Encrypted inference is both compute- and memory-intensive. To perform artifact e
 - **ace-compiler:** The source code for the ACE compiler with MKR support and the MKR test cases.
 - **scripts:** Scripts for building and running MKR and FHELIPE tests.
 - **Dockerfile:** Used to build the Docker image for running all tests.
-- **README.md:** This README file.
+- **README.md:** This [*README*](https://anonymous.4open.science/r/mkr_artifact/README.md) file.
 
 ### 1. Preparing a DOCKER environment to Build and Test the MetaKernel
 
@@ -132,18 +132,25 @@ Here is what you can expect from each file:
 
 
 - **Table4.pdf**:
+
   ![Table4](scripts/Table4.png)
 - **Table5.pdf**:
+
   ![Table5](scripts/Table5.png)
 - **Table6.pdf**:
+
   ![Table6](scripts/Table6.png)
 - **Table7.pdf**:
+
   ![Table7](scripts/Table7.png)
 - **Figure7.pdf**:
+
   ![Figure7](scripts/Figure7.png)
 - **Figure8.pdf**:
+
   ![Figure8](scripts/Figure8.png)
 - **Table8.pdf**:
+
   ![Table8](scripts/Table8.png)
 
 *Note: The appearance of the generated PDF files may vary slightly depending on the hardware environment used.*

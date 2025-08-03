@@ -338,7 +338,7 @@ CGO25_CONFIG = {
 ASPLOS25_MODEL = []
 ASPLOS25_CONFIG = {}
 
-# OPSLA25 test configurations
+# OOPSLA25 test configurations
 OOPSLA25_MODEL = [
     'conv_3x16x32x3',
     'conv_16x16x32x3',
@@ -353,7 +353,16 @@ OOPSLA25_MODEL = [
     'fhelipe_mobilenet'
 ]
 
-# OPSLA25 test configurations
+# OOPSLA25 test models need specify icl option
+OOPSLA25_ICL_MODEL = [
+    'resnet18_imagenet',
+    'squeezenet_imagenet',
+    'alexnet_imagenet',
+    'vgg11_imagenet',
+    'mobilenet_imagenet'
+]
+
+# OOPSLA25 test models need specify sharding
 OOPSLA25_SHARDING_MODEL = [
     'conv_64x64x56x3',      
     'conv_128x128x28x3',    
@@ -612,6 +621,8 @@ def get_test_onnx_files(onnx_file, model_dir, paper):
                 test_set = ASPLOS25_MODEL
             elif paper == 'oopsla25':
                 test_set = list(set(OOPSLA25_MODEL) | set(OOPSLA25_SHARDING_MODEL))
+            elif paper == 'oopsla25_mini':
+                test_set = OOPSLA25_MODEL[:2]   # first two cases
             for test in test_set:
                 found = False
                 for model_file in model_files:
@@ -686,7 +697,7 @@ def get_ace_option(test, paper, lib, extra, acc, trace):
         config = CGO25_CONFIG
     elif paper == 'asplos25':
         config = ASPLOS25_CONFIG
-    elif paper == 'oopsla25':
+    elif paper.startswith('oopsla25'):
         config = OOPSLA25_CONFIG
     if acc:
         res.extend(config['accuracy'])
@@ -700,6 +711,9 @@ def get_ace_option(test, paper, lib, extra, acc, trace):
     # sharding options
     if test in config.get('sharding_test'):
         res.append('-VEC:sharding')
+        # icl option
+        if test in OOPSLA25_ICL_MODEL:
+            res.append('-CKKS:icl=4')
     # Target library option
     res.append('-P2C:lib=' + lib)
     # Trace option
@@ -746,7 +760,6 @@ def get_cpp_option(cmplr_dir, installed, src_dir, omp):
         res(list[str]): c++ options
     '''
     res = []
-    ace_lib_to_link = ['libAIRutil.a', 'libFHErt_ant.a', 'libFHErt_common.a']
     res.append('-DRTLIB_SUPPORT_LINUX')
     res.extend(['-I', os.path.join(cmplr_dir, 'include')])
     # append include options
@@ -766,8 +779,8 @@ def get_cpp_option(cmplr_dir, installed, src_dir, omp):
     res.extend(['-O3', '-DNDEBUG', '-std=gnu++17'])
     if omp:
         res.append('-fopenmp')
-    for root, _, files in os.walk(cmplr_dir):
-        for f in files:
-            if f in ace_lib_to_link:
-                res.append(os.path.join(root, f))
+    # link order should not be changed
+    res.append(os.path.join(cmplr_dir, 'rtlib/lib/libFHErt_ant.a'))
+    res.append(os.path.join(cmplr_dir, 'rtlib/lib/libFHErt_common.a'))
+    res.append(os.path.join(cmplr_dir, 'lib/libAIRutil.a'))
     return res

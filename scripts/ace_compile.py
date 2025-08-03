@@ -10,7 +10,7 @@ import datetime
 from ace_util import *  # noqa F403
 
 
-def ace_compile_and_link(cwd, onnx_file, cmplr_dir, installed, src_dir,
+def ace_compile_and_link(cwd, onnx_file, cmplr_dir, installed, src_dir, temp_dir,
                          paper, lib, extra, acc, keep, debug, trace, log):
     '''
     Compile and link executable for onnx_file
@@ -21,6 +21,7 @@ def ace_compile_and_link(cwd, onnx_file, cmplr_dir, installed, src_dir,
         cmplr_dir(str): path of the dir that the ACE compiler is built or installed
         installed(bool): if the ACE compiler is installed or located in build dir
         src_dir(str): path that holds air-infra, nn-addon & fhe-cmplr
+        temp_dir(str): path that holds temp files
         paper(str): conference paper configuration
         lib(str): target library to link
         extra(list[str]): extra ACE compilation options
@@ -41,11 +42,11 @@ def ace_compile_and_link(cwd, onnx_file, cmplr_dir, installed, src_dir,
     info = test + ':\n'
     write_log(info, log)
     indent = ' ' * (len(test) + 2)
-    exec_file = os.path.join(cwd, onnx_name + '.ace')
-    onnx_c = os.path.join(cwd, onnx_name + '.c')
+    exec_file = os.path.join(temp_dir, onnx_name + '.ace')
+    onnx_c = os.path.join(temp_dir, onnx_name + '.c')
     tfile = os.path.join(cwd, onnx_name + '.t')
     jfile = os.path.join(cwd, onnx_name + '.json')
-    wfile = onnx_name + '.weight'
+    wfile = os.path.join(temp_dir, onnx_name + '.weight')
     # ACE compile
     ace_cmplr = get_ace_cmplr(cmplr_dir)
     cmds = ['time', '-f', '\"%e %M\"', ace_cmplr, onnx_file]
@@ -110,7 +111,7 @@ def ace_compile_and_link(cwd, onnx_file, cmplr_dir, installed, src_dir,
         cmds.append('-lgomp')
     if debug:
         print(' '.join(cmds))
-    ret = subprocess.run(cmds, stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+    ret = subprocess.run(cmds, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     if ret.returncode == 0:
         time, memory = time_and_memory(ret.stderr.decode().splitlines()[-1])
         info = '%sGCC: Time = %.2f(s), Memory = %.2f(GB)\n' % (indent, time, memory)
@@ -120,15 +121,17 @@ def ace_compile_and_link(cwd, onnx_file, cmplr_dir, installed, src_dir,
         write_log(info, log)
         info = ' '.join(cmds) + '\n'
         write_log(info, log)
-        for item in ret.stdout.decode().splitlines():
-            write_log(item + '\n', log)
-        for item in ret.stderr.decode().splitlines():
-            write_log(item + '\n', log)
-        return None
+        if ret.stdout:
+            for item in ret.stdout.decode().splitlines():
+                write_log(item + '\n', log)
+        if ret.stderr:
+            for item in ret.stderr.decode().splitlines():
+                write_log(item + '\n', log)
+        sys.exit(-1)
     return exec_file
 
 
-def run_ace_compile(cwd, file_path, model_dir, build_dir, install_dir, src_dir,
+def run_ace_compile(cwd, file_path, model_dir, build_dir, install_dir, src_dir, temp_dir,
                     paper, lib, extra, acc, keep, debug, trace, log):
     '''
     Main function to compile ONNX models via ACE compiler to encrypted executables
@@ -140,6 +143,7 @@ def run_ace_compile(cwd, file_path, model_dir, build_dir, install_dir, src_dir,
         build_dir(str): path of the build dir of the ACE compiler
         install_dir(str): path of the install dir of the ACE compiler
         src_dir(str): path that holds air-infra, nn-addon & fhe-cmplr
+        temp_dir(str): path that holds temp files
         paper(str): conference paper configuration
         lib(str): target library to link
         extra(list[str]): extra ACE compilation options
@@ -162,7 +166,7 @@ def run_ace_compile(cwd, file_path, model_dir, build_dir, install_dir, src_dir,
     res = []
     for onnx_file in onnx_files:
         # run compilations
-        exec_file = ace_compile_and_link(cwd, onnx_file, cmplr_dir, installed, src_dir,
+        exec_file = ace_compile_and_link(cwd, onnx_file, cmplr_dir, installed, src_dir, temp_dir,
                                          paper, lib, extra, acc, keep, debug, trace, log)
         if exec_file is not None:
             res.append(exec_file)
@@ -197,6 +201,8 @@ if __name__ == "__main__":
                         help='configuration to reproduce paper results')
     parser.add_argument('-s', '--src', metavar='PATH', default='./',
                         help='directory that holds repos of air-infra, fhe-cmplr & nn-addon')
+    parser.add_argument('-tmp', '--temp', metavar='PATH', default='./',
+                        help='directory that holds temp files')
     parser.add_argument('-t', '--trace', action='store_false', default=True,
                         help='print out trace info into log file')
     args = parser.parse_args()
@@ -206,6 +212,6 @@ if __name__ == "__main__":
     log = open(os.path.join(cwd, log_file_name), 'w')
     info = '#### log for: %s\n' % (' '.join(sys.argv))
     write_log(info, log)
-    run_ace_compile(cwd, args.file, args.model, args.build, args.cmplr, args.src, args.paper,
+    run_ace_compile(cwd, args.file, args.model, args.build, args.cmplr, args.src, args.temp, args.paper,
                     args.lib, args.extra, args.acc, args.keep, args.debug, args.trace, log)
     log.close()

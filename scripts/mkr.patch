@@ -4069,6 +4069,15 @@ index 0000000..92e39a0
 +# mobilenet is not support
 +# imagenet
 +# not support or OOM
+diff --git a/mini_input.txt b/mini_input.txt
+new file mode 100644
+index 0000000..5cd775d
+--- /dev/null
++++ b/mini_input.txt
+@@ -0,0 +1,3 @@
++# conv
++metak_fhelipe_conv_3x16x32x3
++metak_fhelipe_conv_16x16x32x3
 diff --git a/scripts/default_parameters.py b/scripts/default_parameters.py
 index 7779b9a..203adbb 100644
 --- a/scripts/default_parameters.py
@@ -4521,7 +4530,7 @@ index 7779b9a..203adbb 100644
      "condor_fhelipe_logreg": condor_fhelipe_logreg,
 diff --git a/test_fhelipe.py b/test_fhelipe.py
 new file mode 100644
-index 0000000..2721e3b
+index 0000000..33d957c
 --- /dev/null
 +++ b/test_fhelipe.py
 @@ -0,0 +1,340 @@
@@ -4610,7 +4619,7 @@ index 0000000..2721e3b
 +        "stdbuf", "-o0",
 +        TIME_CMD,
 +        "-f", "TIME_STATS::%e::%M::",
-+        "python", "-u"
++        "python3", "-u"
 +    ] + command
 +
 +    cmd_str = ' '.join(timed_command)
